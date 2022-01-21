@@ -197,7 +197,7 @@ int main(int argc, char **argv)
     };
 
 # ifdef OPENSSL_SYS_WIN32
-    CRYPTO_malloc_init();
+    OPENSSL_malloc_init();
 # endif
 
     RAND_seed(rnd_seed, sizeof rnd_seed);
