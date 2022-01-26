@@ -17,8 +17,11 @@ ADD_LIBRARY(openssl-ecjpake ${SOURCES})
 SET_TARGET_PROPERTIES(openssl-ecjpake PROPERTIES PUBLIC_HEADER ${CMAKE_CURRENT_SOURCE_DIR}/openssl/ecjpake.h)
 
 IF (${BUILD_SHARED_LIBS})
-        add_definitions(-DECJPAKE_SHARED)
-        target_compile_definitions(openssl-ecjpake PRIVATE ECJPAKE_SHARED_EXPORT)
+    ADD_DEFINITIONS(-DECJPAKE_SHARED)
+    TARGET_COMPILE_DEFINITIONS(openssl-ecjpake PRIVATE ECJPAKE_SHARED_EXPORT)
+    IF (NOT WIN32)
+        TARGET_COMPILE_OPTIONS(openssl-ecjpake PRIVATE -fvisibility=hidden)
+    ENDIF()
 ENDIF()
 
 TARGET_LINK_LIBRARIES(openssl-ecjpake PRIVATE OpenSSL::Crypto)
